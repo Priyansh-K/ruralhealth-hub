@@ -257,31 +257,19 @@ export default function HomePage() {
                     Features
                   </Link>
                 </li>
-                <li>
-                  <Link href="/pricing" className="hover:text-blue-900">
-                    Pricing
-                  </Link>
-                </li>
+               
               </ul>
             </div>
             <div>
               <h3 className="mb-4 font-semibold text-gray-900">Support</h3>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li>
-                  <Link href="/help" className="hover:text-blue-900">
-                    Help Center
-                  </Link>
-                </li>
+               
                 <li>
                   <Link href="/contact" className="hover:text-blue-900">
                     Contact
                   </Link>
                 </li>
-                <li>
-                  <Link href="/docs" className="hover:text-blue-900">
-                    Documentation
-                  </Link>
-                </li>
+                
               </ul>
             </div>
             <div>
@@ -292,16 +280,12 @@ export default function HomePage() {
                     Privacy Policy
                   </Link>
                 </li>
-                <li>
-                  <Link href="/terms" className="hover:text-blue-900">
-                    Terms of Service
-                  </Link>
-                </li>
-                <li>
+                
+                {/* <li>
                   <Link href="/security" className="hover:text-blue-900">
                     Security
                   </Link>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>

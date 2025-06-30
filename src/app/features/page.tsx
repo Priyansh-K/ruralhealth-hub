@@ -108,35 +108,6 @@ export default function FeaturesPage() {
       ],
     },
     {
-      category: "Security & Compliance",
-      icon: Shield,
-      color: "text-red-600",
-      bgColor: "bg-red-50",
-      borderColor: "border-red-200",
-      items: [
-        {
-          title: "HIPAA Compliance",
-          description: "Healthcare data protection with industry-standard security measures and encryption.",
-          icon: Shield,
-        },
-        {
-          title: "Role-Based Access",
-          description: "Secure access control ensuring users only see appropriate information for their role.",
-          icon: UserCheck,
-        },
-        {
-          title: "Data Encryption",
-          description: "End-to-end encryption for all sensitive medical data and patient information.",
-          icon: Database,
-        },
-        {
-          title: "Audit Trails",
-          description: "Complete logging of all system access and data modifications for compliance.",
-          icon: Activity,
-        },
-      ],
-    },
-    {
       category: "Rural Healthcare Focus",
       icon: Stethoscope,
       color: "text-orange-600",

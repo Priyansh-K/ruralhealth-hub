@@ -92,10 +92,7 @@ export default function AboutPage() {
                     <CheckCircle className="mr-2 h-4 w-4 text-green-600" />
                     Role-based access control
                   </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="mr-2 h-4 w-4 text-green-600" />
-                    Audit trail logging
-                  </li>
+                  
                 </ul>
               </CardContent>
             </Card>
@@ -164,7 +161,7 @@ export default function AboutPage() {
         </div>
 
         {/* Statistics */}
-        <div className="mb-16 rounded-lg bg-blue-900 p-8 text-white">
+        {/* <div className="mb-16 rounded-lg bg-blue-900 p-8 text-white">
           <h2 className="mb-8 text-center text-3xl font-bold">Making a Difference</h2>
 
           <div className="grid gap-8 md:grid-cols-4">
@@ -185,10 +182,10 @@ export default function AboutPage() {
               <div className="text-blue-200">Uptime</div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Team Values */}
-        <div className="text-center">
+        {/* <div className="text-center">
           <h2 className="mb-8 text-3xl font-bold text-gray-900">Our Core Values</h2>
 
           <div className="grid gap-6 md:grid-cols-3">
@@ -211,7 +208,7 @@ export default function AboutPage() {
               </p>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   )

@@ -1,5 +1,5 @@
 import { MainNav } from "@/components/layout/main-nav"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Shield, Lock, Eye, Database, UserCheck, FileText } from "lucide-react"
 
 export default function PrivacyPage() {
@@ -95,27 +95,7 @@ export default function PrivacyPage() {
         </div>
 
         {/* HIPAA Compliance Notice */}
-        <Card className="mb-12 border-l-4 border-l-blue-500 bg-blue-50">
-          <CardHeader>
-            <CardTitle className="flex items-center text-blue-900">
-              <Shield className="mr-2 h-6 w-6" />
-              HIPAA Compliance Commitment
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-blue-800 mb-4">
-              RuralHealth Hub is fully compliant with the Health Insurance Portability and Accountability Act (HIPAA)
-              and other applicable healthcare privacy regulations. We implement comprehensive safeguards to protect your
-              protected health information (PHI).
-            </p>
-            <ul className="space-y-2 text-blue-800">
-              <li>• Administrative safeguards including staff training and access controls</li>
-              <li>• Physical safeguards protecting our servers and facilities</li>
-              <li>• Technical safeguards including encryption and secure transmission</li>
-              <li>• Regular risk assessments and security updates</li>
-            </ul>
-          </CardContent>
-        </Card>
+       
 
         {/* Privacy Sections */}
         <div className="space-y-8 mb-16">
@@ -144,7 +124,7 @@ export default function PrivacyPage() {
         </div>
 
         {/* Contact Information */}
-        <Card className="mb-12">
+        {/* <Card className="mb-12">
           <CardHeader>
             <CardTitle className="text-2xl">Contact Our Privacy Team</CardTitle>
             <CardDescription>
@@ -173,7 +153,7 @@ export default function PrivacyPage() {
               </div>
             </div>
           </CardContent>
-        </Card>
+        </Card> */}
 
         {/* Updates and Changes */}
         <Card>
