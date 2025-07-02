@@ -12,15 +12,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import {
-  Mail,
-  Phone,
-  MapPin,
-  Clock,
   Send,
   CheckCircle,
   AlertCircle,
-  Building2,
-  Heart,
   MessageSquare,
 } from "lucide-react"
 
@@ -63,32 +57,6 @@ export default function ContactPage() {
     }
   }
 
-  const contactInfo = [
-    {
-      icon: Mail,
-      title: "Email Us",
-      content: "support@ruralhealthhub.com",
-      description: "We'll respond within 24 hours",
-    },
-    {
-      icon: Phone,
-      title: "Call Us",
-      content: "+1 (555) 123-4567",
-      description: "Mon-Fri, 8AM-6PM EST",
-    },
-    {
-      icon: MapPin,
-      title: "Visit Us",
-      content: "123 Healthcare Ave, Rural City, RC 12345",
-      description: "By appointment only",
-    },
-    {
-      icon: Clock,
-      title: "Support Hours",
-      content: "24/7 Emergency Support",
-      description: "For critical healthcare systems",
-    },
-  ]
 
   const inquiryTypes = [
     { value: "sales", label: "Sales Inquiry" },
@@ -115,7 +83,7 @@ export default function ContactPage() {
 
         <div className="grid gap-12 lg:grid-cols-3">
           {/* Contact Form */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-3">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center">
@@ -263,79 +231,7 @@ export default function ContactPage() {
             </Card>
           </div>
 
-          {/* Contact Information */}
-          <div className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Contact Information</CardTitle>
-                <CardDescription>Multiple ways to reach our team</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {contactInfo.map((info, index) => (
-                  <div key={index} className="flex items-start space-x-3">
-                    <div className="flex-shrink-0">
-                      <div className="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-lg">
-                        <info.icon className="h-5 w-5 text-blue-600" />
-                      </div>
-                    </div>
-                    <div>
-                      <h3 className="font-medium text-gray-900">{info.title}</h3>
-                      <p className="text-sm font-medium text-blue-600">{info.content}</p>
-                      <p className="text-sm text-gray-500">{info.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-
-            <Card className="border-l-4 border-l-green-500">
-              <CardHeader>
-                <CardTitle className="flex items-center text-green-700">
-                  <Heart className="mr-2 h-5 w-5" />
-                  Quick Start Options
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <h4 className="font-medium text-green-900">Free Demo</h4>
-                  <p className="text-sm text-green-800">
-                    Schedule a personalized demo to see RuralHealth Hub in action.
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-medium text-green-900">Free Trial</h4>
-                  <p className="text-sm text-green-800">
-                    Start your 30-day free trial immediately with no credit card required.
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-medium text-green-900">Implementation Support</h4>
-                  <p className="text-sm text-green-800">Get dedicated support during setup and staff training.</p>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="border-l-4 border-l-blue-500">
-              <CardHeader>
-                <CardTitle className="flex items-center text-blue-700">
-                  <Building2 className="mr-2 h-5 w-5" />
-                  For Healthcare Organizations
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-blue-800 mb-4">
-                  We understand the unique challenges of rural healthcare. Our team includes healthcare professionals
-                  who can help you optimize your workflows.
-                </p>
-                <ul className="space-y-2 text-sm text-blue-800">
-                  <li>• HIPAA compliance consultation</li>
-                  <li>• Custom workflow design</li>
-                  <li>• Staff training programs</li>
-                  <li>• Data migration assistance</li>
-                </ul>
-              </CardContent>
-            </Card>
-          </div>
+          
         </div>
       </div>
     </div>

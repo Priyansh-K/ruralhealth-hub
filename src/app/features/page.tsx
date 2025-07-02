@@ -56,11 +56,7 @@ export default function FeaturesPage() {
       bgColor: "bg-green-50",
       borderColor: "border-green-200",
       items: [
-        {
-          title: "ICD-10 Diagnosis Coding",
-          description: "Standardized medical diagnosis recording with ICD-10 codes and detailed descriptions.",
-          icon: FileText,
-        },
+
         {
           title: "Prescription Management",
           description: "Complete medication tracking with dosage, instructions, and duration management.",

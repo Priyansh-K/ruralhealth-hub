@@ -217,7 +217,9 @@ export default function PatientDetailPage() {
                         <h5 className="font-medium text-gray-700">Diagnoses:</h5>
                         <ul className="list-disc list-inside text-sm text-gray-600">
                           {visit.diagnoses.map((diag) => (
-                            <li key={diag.id}>{diag.diagnosis_code}</li>
+                            <li key={diag.id}>
+                              {diag.description || "No description available"}
+                            </li>
                           ))}
                         </ul>
                       </div>
