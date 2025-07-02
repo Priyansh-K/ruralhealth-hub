@@ -37,9 +37,6 @@ export default function LoginPage() {
       // Redirect based on user type or provided redirect
       if (redirect) {
         router.push(redirect)
-      } else {
-        // Will be handled by auth context redirect
-        router.push("/")
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed")
