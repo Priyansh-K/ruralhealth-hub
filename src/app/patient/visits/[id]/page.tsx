@@ -259,3 +259,5 @@ export default function PatientVisitDetailPage() {
     </div>
   )
 }
+
+export const runtime = "edge"

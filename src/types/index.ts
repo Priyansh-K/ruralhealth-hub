@@ -17,6 +17,17 @@ export interface Patient {
   created_at: string
   updated_at: string
   clinic?: Clinic
+  visits?: Visits[]
+}
+
+export interface Visits {
+  id: number
+  visit_date: string
+  reason: string
+  diagnoses?: Diagnosis[]
+  prescriptions?: Prescription[]
+  staff?: Staff
+  notes?: string
 }
 
 export interface Clinic {

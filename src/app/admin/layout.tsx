@@ -42,7 +42,7 @@ export default function AdminLayout({
       <div className="flex">
         <AdminSidebar />
         <main className="flex-1 p-6">
-          <BreadcrumbNav />
+          <BreadcrumbNav userType={"patient"} />
           <div className="mt-6">{children}</div>
         </main>
       </div>

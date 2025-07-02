@@ -211,6 +211,27 @@ export default function PatientDetailPage() {
                     </div>
                     <p className="text-sm text-gray-600">Attended by {visit.staff?.full_name}</p>
                     {visit.notes && <p className="text-sm text-gray-500 mt-1">{visit.notes}</p>}
+                    {/* diagnosis and prescription */}
+                    {visit.diagnoses && visit.diagnoses.length > 0 && (
+                      <div className="mt-2">
+                        <h5 className="font-medium text-gray-700">Diagnoses:</h5>
+                        <ul className="list-disc list-inside text-sm text-gray-600">
+                          {visit.diagnoses.map((diag) => (
+                            <li key={diag.id}>{diag.diagnosis_code}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    {visit.prescriptions && visit.prescriptions.length > 0 && (
+                      <div className="mt-2">
+                        <h5 className="font-medium text-gray-700">Prescriptions:</h5>
+                        <ul className="list-disc list-inside text-sm text-gray-600">
+                          {visit.prescriptions.map((prescription) => (
+                            <li key={prescription.id}>{prescription.medication_name}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                   </div>
                 ))}
                 {patient.visits.length > 5 && (
@@ -241,7 +262,7 @@ export default function PatientDetailPage() {
             <CardTitle>Quick Actions</CardTitle>
             <CardDescription>Common actions for this patient</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-3">
+          <CardContent className="space-y-2">
             <Link href={`/clinic/visits/new?patient_id=${patient.id}`}>
               <Button className="w-full justify-start bg-blue-900 hover:bg-blue-800">
                 <Calendar className="mr-2 h-4 w-4" />
@@ -266,3 +287,5 @@ export default function PatientDetailPage() {
     </div>
   )
 }
+
+export const runtime = "edge"

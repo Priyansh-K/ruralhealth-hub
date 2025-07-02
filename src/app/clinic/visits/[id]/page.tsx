@@ -522,3 +522,6 @@ export default function VisitDetailPage() {
     </div>
   )
 }
+
+
+export const runtime = "edge"
