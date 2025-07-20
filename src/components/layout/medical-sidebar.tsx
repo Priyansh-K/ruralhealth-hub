@@ -19,59 +19,38 @@ import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
   LayoutDashboard,
-  Building2,
   Users,
-  UserPlus,
   Calendar,
-  Settings,
   Heart,
   LogOut,
 } from "lucide-react"
-import type { Clinic } from "@/types"
+import type { Staff } from "@/types"
 
-const clinicNavItems = [
+const medicalNavItems = [
   {
     title: "Dashboard",
-    href: "/clinic",
+    href: "/portal/medical",
     icon: LayoutDashboard,
     color: "text-blue-600",
   },
   {
-    title: "Profile",
-    href: "/clinic/profile",
-    icon: Building2,
+    title: "Patients",
+    href: "/portal/medical/patients",
+    icon: Users,
     color: "text-green-600",
   },
   {
-    title: "Patients",
-    href: "/clinic/patients",
-    icon: Users,
-    color: "text-purple-600",
-  },
-  {
-    title: "Staff Management",
-    href: "/clinic/staff",
-    icon: UserPlus,
-    color: "text-orange-600",
-  },
-  {
     title: "Visits",
-    href: "/clinic/visits",
+    href: "/portal/medical/visits",
     icon: Calendar,
-    color: "text-indigo-600",
-  },
-  {
-    title: "Settings",
-    href: "/clinic/settings",
-    icon: Settings,
-    color: "text-gray-600",
+    color: "text-purple-600",
   },
 ]
 
-export function ClinicSidebar() {
+export function MedicalSidebar() {
   const pathname = usePathname()
-  const { user, logout } = useAuth()
-  const clinic = user as Clinic
+  const { user, userType, logout } = useAuth()
+  const staff = user as unknown as Staff
 
   const handleLogout = () => {
     logout()
@@ -87,6 +66,9 @@ export function ClinicSidebar() {
       .slice(0, 2)
   }
 
+  // All navigation items are now available to all medical staff
+  const filteredNavItems = medicalNavItems
+
   return (
     <Sidebar className="border-r border-gray-200">
       <SidebarHeader className="border-b border-gray-100 p-4">
@@ -96,8 +78,8 @@ export function ClinicSidebar() {
           </div>
           <div className="flex flex-col">
             <span className="text-sm font-semibold text-gray-900">RuralHealth Hub</span>
-            <span className="text-xs font-medium text-green-600 bg-green-50 px-2 py-0.5 rounded-full">
-              Clinic Portal
+            <span className="text-xs font-medium text-red-600 bg-red-50 px-2 py-0.5 rounded-full">
+              Medical Portal
             </span>
           </div>
         </div>
@@ -106,22 +88,20 @@ export function ClinicSidebar() {
       <SidebarContent className="p-2">
         <SidebarGroup>
           <SidebarGroupLabel className="text-xs font-medium text-gray-500 uppercase tracking-wider px-3 py-2">
-            Administrative Functions
+            Navigation
           </SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu className="space-y-1">
-              {clinicNavItems.map((item) => (
+            <SidebarMenu>
+              {filteredNavItems.map((item) => (
                 <SidebarMenuItem key={item.href}>
-                  <SidebarMenuButton
-                    asChild
+                  <SidebarMenuButton 
+                    asChild 
                     isActive={pathname === item.href}
-                    className="group relative overflow-hidden rounded-lg transition-all duration-200 hover:bg-gray-50 data-[active=true]:bg-green-50 data-[active=true]:text-green-700 data-[active=true]:border-r-2 data-[active=true]:border-green-600"
+                    className="group/item hover:bg-gray-50 data-[active=true]:bg-blue-50 data-[active=true]:text-blue-700"
                   >
-                    <Link href={item.href} className="flex items-center space-x-3 px-3 py-2">
-                      <item.icon
-                        className={`h-4 w-4 ${pathname === item.href ? "text-green-600" : item.color} group-hover:scale-110 transition-transform`}
-                      />
-                      <span className="font-medium">{item.title}</span>
+                    <Link href={item.href} className="flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors">
+                      <item.icon className={`h-4 w-4 ${item.color} group-data-[active=true]/item:text-blue-600`} />
+                      <span className="text-sm font-medium">{item.title}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -132,22 +112,26 @@ export function ClinicSidebar() {
       </SidebarContent>
 
       <SidebarFooter className="border-t border-gray-100 p-4">
-        <div className="flex items-center space-x-3 mb-3">
-          <Avatar className="h-8 w-8 bg-green-100">
-            <AvatarFallback className="text-green-700 text-sm font-medium">
-              {getInitials(clinic?.name || "C")}
+        <div className="flex items-center space-x-3 mb-4">
+          <Avatar className="h-10 w-10">
+            <AvatarFallback className="bg-red-100 text-red-700 font-medium">
+              {staff?.full_name ? getInitials(staff.full_name) : "U"}
             </AvatarFallback>
           </Avatar>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-gray-900 truncate">{clinic?.name}</p>
-            <p className="text-xs text-gray-500 truncate">Administrative Staff</p>
+            <p className="text-sm font-medium text-gray-900 truncate">
+              {staff?.full_name || "Medical Staff"}
+            </p>
+            <p className="text-xs text-gray-500 capitalize">
+              {userType === "doctor" ? "Doctor" : "Nurse"}
+            </p>
           </div>
         </div>
         <Button
-          variant="outline"
+          variant="ghost"
           size="sm"
           onClick={handleLogout}
-          className="w-full justify-start text-red-600 border-red-200 hover:bg-red-50 hover:text-red-700 bg-transparent"
+          className="w-full justify-start text-gray-600 hover:text-red-600 hover:bg-red-50"
         >
           <LogOut className="mr-2 h-4 w-4" />
           Sign Out

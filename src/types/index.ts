@@ -1,7 +1,7 @@
 export interface User {
   id: number
   email: string
-  user_type: "patient" | "clinic" | "admin"
+  user_type: "patient" | "clinic_staff" | "doctor" | "nurse" | "admin"
   created_at: string
   updated_at: string
 }
@@ -102,7 +102,8 @@ export interface DashboardStats {
 
 export interface AuthResponse {
   token: string
-  user_type: "patient" | "clinic" | "admin"
+  user_type: "patient" | "clinic_staff" | "doctor" | "nurse" | "admin"
+  login_type?: "staff" | "medical"
   user: Patient | Clinic
 }
 
@@ -142,6 +143,7 @@ export interface RegisterClinicData {
 export interface LoginData {
   email: string
   password: string
+  login_type?: "staff" | "medical"
 }
 
 export interface ChangePasswordData {
@@ -150,10 +152,11 @@ export interface ChangePasswordData {
 }
 
 export interface CreateStaffData {
+  email?: string
+  password?: string
   full_name: string
-  role: "Doctor" | "Nurse" | "Administrator" | "Pharmacist"
+  role: "Doctor" | "Nurse" | "Clinic_Administrator" | "Pharmacist"
   phone: string
-  email: string
 }
 
 export interface CreateVisitData {

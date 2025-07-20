@@ -10,7 +10,6 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "RuralHealth Hub - Rural Healthcare Management System",
   description: "Comprehensive healthcare management system for rural clinics and patients",
-    generator: 'v0.dev'
 }
 
 export default function RootLayout({

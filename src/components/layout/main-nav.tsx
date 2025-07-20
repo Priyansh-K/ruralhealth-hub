@@ -55,7 +55,13 @@ export function MainNav() {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56">
                 <DropdownMenuItem asChild>
-                  <Link href={`/${userType}`} className="flex items-center">
+                  <Link href={
+                    userType === "clinic_staff" ? "/clinic" :
+                    userType === "patient" ? "/patient" :
+                    userType === "admin" ? "/admin" :
+                    userType === "doctor" || userType === "nurse" ? "/portal/medical" :
+                    "/"
+                  } className="flex items-center">
                     <User className="mr-2 h-4 w-4" />
                     Dashboard
                   </Link>

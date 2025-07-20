@@ -18,10 +18,11 @@ import { Heart, AlertCircle } from "lucide-react"
 export default function LoginPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [loginType, setLoginType] = useState<"patient" | "staff" | "medical">("patient")
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
 
-  const { login } = useAuth()
+  const { login, clinicLogin } = useAuth()
   const router = useRouter()
   const searchParams = useSearchParams()
   const redirect = searchParams.get("redirect")
@@ -32,7 +33,12 @@ export default function LoginPage() {
     setIsLoading(true)
 
     try {
-      await login({ email, password })
+      if (loginType === "patient") {
+        await login({ email, password })
+      } else {
+        // For staff and medical, use clinicLogin with login_type
+        await clinicLogin({ email, password, login_type: loginType })
+      }
 
       // Redirect based on user type or provided redirect
       if (redirect) {
@@ -54,7 +60,11 @@ export default function LoginPage() {
           <CardHeader className="text-center">
             <Heart className="mx-auto mb-4 h-12 w-12 text-blue-900" />
             <CardTitle className="text-2xl font-bold text-gray-900">Welcome Back</CardTitle>
-            <CardDescription>Sign in to your RuralHealth Hub account</CardDescription>
+            <CardDescription>
+              Sign in to your RuralHealth Hub account
+              <br />
+              <span className="text-sm">Choose your role: Patient, Clinic Staff, or Medical Staff</span>
+            </CardDescription>
           </CardHeader>
 
           <CardContent>
@@ -65,6 +75,45 @@ export default function LoginPage() {
                   <AlertDescription>{error}</AlertDescription>
                 </Alert>
               )}
+
+              {/* Login Type Selector */}
+              <div className="space-y-2">
+                <Label>Login As</Label>
+                <div className="grid grid-cols-3 gap-2">
+                  <Button
+                    type="button"
+                    variant={loginType === "patient" ? "default" : "outline"}
+                    onClick={() => setLoginType("patient")}
+                    className="text-sm"
+                  >
+                    Patient
+                  </Button>
+                  <Button
+                    type="button"
+                    variant={loginType === "staff" ? "default" : "outline"}
+                    onClick={() => setLoginType("staff")}
+                    className="text-sm"
+                  >
+                    Clinic Staff
+                  </Button>
+                  <Button
+                    type="button"
+                    variant={loginType === "medical" ? "default" : "outline"}
+                    onClick={() => setLoginType("medical")}
+                    className="text-sm"
+                  >
+                    Medical Staff
+                  </Button>
+                </div>
+                <p className="text-xs text-gray-600">
+                  {loginType === "patient" 
+                    ? "Access your patient portal and medical records" 
+                    : loginType === "staff"
+                    ? "For clinic administrators and administrative staff"
+                    : "For doctors and nurses practicing medicine"
+                  }
+                </p>
+              </div>
 
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>

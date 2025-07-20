@@ -13,7 +13,7 @@ import {
 import { ChevronRight, Home } from "lucide-react"
 
 interface BreadcrumbNavProps {
-  userType: "patient" | "clinic"
+  userType: "patient" | "clinic" | "medical"
 }
 
 export function BreadcrumbNav({ userType }: BreadcrumbNavProps) {
@@ -23,16 +23,25 @@ export function BreadcrumbNav({ userType }: BreadcrumbNavProps) {
   const generateBreadcrumbs = () => {
     const breadcrumbs = [
       {
-        label: userType === "patient" ? "Patient Portal" : "Clinic Portal",
-        href: `/${userType}`,
+        label: userType === "patient" ? "Patient Portal" : userType === "clinic" ? "Clinic Portal" : "Medical Portal",
+        href: userType === "medical" ? "/portal/medical" : `/${userType}`,
         isHome: true,
       },
     ]
 
+    // Handle multi-segment paths, but avoid duplicating the home path
+    const homeHref = userType === "medical" ? "/portal/medical" : `/${userType}`
+    
     if (segments.length > 1) {
       for (let i = 1; i < segments.length; i++) {
         const segment = segments[i]
         const href = `/${segments.slice(0, i + 1).join("/")}`
+        
+        // Skip if this href is the same as home breadcrumb
+        if (href === homeHref) {
+          continue
+        }
+        
         const label = segment.charAt(0).toUpperCase() + segment.slice(1)
 
         breadcrumbs.push({
@@ -52,7 +61,7 @@ export function BreadcrumbNav({ userType }: BreadcrumbNavProps) {
     <Breadcrumb>
       <BreadcrumbList>
         {breadcrumbs.map((breadcrumb, index) => (
-          <div key={breadcrumb.href} className="flex items-center">
+          <div key={`${index}-${breadcrumb.href}`} className="flex items-center">
             <BreadcrumbItem>
               {index === breadcrumbs.length - 1 ? (
                 <BreadcrumbPage className="flex items-center">

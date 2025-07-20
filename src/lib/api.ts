@@ -68,6 +68,13 @@ class ApiClient {
     })
   }
 
+  async clinicLogin(data: LoginData): Promise<AuthResponse> {
+    return this.request("/auth/clinic-login", {
+      method: "POST",
+      body: JSON.stringify(data),
+    })
+  }
+
   async registerPatient(data: RegisterPatientData): Promise<AuthResponse> {
     return this.request("/auth/register/patient", {
       method: "POST",
@@ -121,40 +128,47 @@ class ApiClient {
     return this.request(`/portal/patient/prescriptions?page=${page}&per_page=${perPage}`)
   }
 
-  // Clinic Portal
+  // Clinic Portal (Staff only)
   async getClinicProfile(): Promise<Clinic> {
-    return this.request("/portal/clinic/profile")
+    return this.request("/portal/staff/profile")
   }
 
   async updateClinicProfile(data: Partial<Clinic>): Promise<Clinic> {
-    return this.request("/portal/clinic/profile", {
+    return this.request("/portal/staff/profile", {
       method: "PUT",
       body: JSON.stringify(data),
     })
   }
 
   async getClinicDashboard(): Promise<DashboardStats> {
-    return this.request("/portal/clinic/dashboard")
+    return this.request("/portal/staff/dashboard")
   }
 
   async getClinicPatients(page = 1, perPage = 10, search?: string): Promise<PaginatedResponse<Patient>> {
     const params = new URLSearchParams({ page: page.toString(), per_page: perPage.toString() })
     if (search) params.append("search", search)
-    return this.request(`/portal/clinic/patients?${params}`)
+    return this.request(`/portal/staff/patients?${params}`)
   }
 
   async getClinicPatient(id: number): Promise<Patient> {
-    return this.request(`/portal/clinic/patients/${id}`)
+    return this.request(`/portal/staff/patients/${id}`)
+  }
+
+  async createPatient(data: Omit<RegisterPatientData, 'email' | 'password' | 'clinic_id'>): Promise<Patient> {
+    return this.request("/portal/staff/patients", {
+      method: "POST",
+      body: JSON.stringify(data),
+    })
   }
 
   async getClinicStaff(page = 1, perPage = 10, role?: string): Promise<PaginatedResponse<Staff>> {
     const params = new URLSearchParams({ page: page.toString(), per_page: perPage.toString() })
     if (role) params.append("role", role)
-    return this.request(`/portal/clinic/staff?${params}`)
+    return this.request(`/portal/staff/staff?${params}`)
   }
 
   async createStaff(data: CreateStaffData): Promise<Staff> {
-    return this.request("/portal/clinic/staff", {
+    return this.request("/portal/staff/staff", {
       method: "POST",
       body: JSON.stringify(data),
     })
@@ -163,29 +177,77 @@ class ApiClient {
   async getClinicVisits(page = 1, perPage = 10, patientId?: number): Promise<PaginatedResponse<Visit>> {
     const params = new URLSearchParams({ page: page.toString(), per_page: perPage.toString() })
     if (patientId) params.append("patient_id", patientId.toString())
-    return this.request(`/portal/clinic/visits?${params}`)
+    return this.request(`/portal/staff/visits?${params}`)
   }
 
   async getClinicVisit(id: number): Promise<Visit> {
-    return this.request(`/portal/clinic/visits/${id}`)
+    return this.request(`/portal/staff/visits/${id}`)
   }
 
   async createVisit(data: CreateVisitData): Promise<Visit> {
-    return this.request("/portal/clinic/visits", {
+    return this.request("/portal/staff/visits", {
       method: "POST",
       body: JSON.stringify(data),
     })
   }
 
-  async createDiagnosis(data: CreateDiagnosisData): Promise<Diagnosis> {
-    return this.request("/portal/clinic/diagnoses", {
+  // Medical Portal (Doctors and Nurses)
+  async getMedicalDashboard(): Promise<DashboardStats> {
+    return this.request("/portal/medical/dashboard")
+  }
+
+  async getMedicalPatients(page = 1, perPage = 10, search?: string): Promise<PaginatedResponse<Patient>> {
+    const params = new URLSearchParams({ page: page.toString(), per_page: perPage.toString() })
+    if (search) params.append("search", search)
+    return this.request(`/portal/medical/patients?${params}`)
+  }
+
+  async getMedicalPatient(id: number): Promise<Patient> {
+    return this.request(`/portal/medical/patients/${id}`)
+  }
+
+  async getMedicalStaff(page = 1, perPage = 10, role?: string): Promise<PaginatedResponse<Staff>> {
+    const params = new URLSearchParams({ page: page.toString(), per_page: perPage.toString() })
+    if (role) params.append("role", role)
+    return this.request(`/portal/medical/staff?${params}`)
+  }
+
+  async getMedicalVisits(page = 1, perPage = 10, patientId?: number): Promise<PaginatedResponse<Visit>> {
+    const params = new URLSearchParams({ page: page.toString(), per_page: perPage.toString() })
+    if (patientId) params.append("patient_id", patientId.toString())
+    return this.request(`/portal/medical/visits?${params}`)
+  }
+
+  async getMedicalVisit(id: number): Promise<Visit> {
+    return this.request(`/portal/medical/visits/${id}`)
+  }
+
+  async createMedicalVisit(data: CreateVisitData): Promise<Visit> {
+    return this.request("/portal/medical/visits", {
       method: "POST",
       body: JSON.stringify(data),
     })
   }
 
-  async createPrescription(data: CreatePrescriptionData): Promise<Prescription> {
-    return this.request("/portal/clinic/prescriptions", {
+  async getMedicalDiagnoses(page = 1, perPage = 10): Promise<PaginatedResponse<Diagnosis>> {
+    const params = new URLSearchParams({ page: page.toString(), per_page: perPage.toString() })
+    return this.request(`/portal/medical/diagnoses?${params}`)
+  }
+
+  async createMedicalDiagnosis(data: CreateDiagnosisData): Promise<Diagnosis> {
+    return this.request("/portal/medical/diagnoses", {
+      method: "POST",
+      body: JSON.stringify(data),
+    })
+  }
+
+  async getMedicalPrescriptions(page = 1, perPage = 10): Promise<PaginatedResponse<Prescription>> {
+    const params = new URLSearchParams({ page: page.toString(), per_page: perPage.toString() })
+    return this.request(`/portal/medical/prescriptions?${params}`)
+  }
+
+  async createMedicalPrescription(data: CreatePrescriptionData): Promise<Prescription> {
+    return this.request("/portal/medical/prescriptions", {
       method: "POST",
       body: JSON.stringify(data),
     })

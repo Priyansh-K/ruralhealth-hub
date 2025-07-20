@@ -45,6 +45,7 @@ export default function ClinicStaffPage() {
     role: "Doctor",
     phone: "",
     email: "",
+    password: "",
   })
 
   const loadStaff = async (page = 1, role = "") => {
@@ -87,13 +88,14 @@ export default function ClinicStaffPage() {
 
     try {
       await apiClient.createStaff(addForm)
-      setSuccess("Staff member added successfully!")
+      setSuccess(`${addForm.role} "${addForm.full_name}" has been added successfully! They can now login at /auth/login using their email and password.`)
       setIsAddDialogOpen(false)
       setAddForm({
         full_name: "",
         role: "Doctor",
         phone: "",
         email: "",
+        password: "",
       })
       // Reload staff list
       setIsLoading(true)
@@ -137,7 +139,11 @@ export default function ClinicStaffPage() {
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
               <DialogTitle>Add New Staff Member</DialogTitle>
-              <DialogDescription>Add a new healthcare provider to your clinic team.</DialogDescription>
+              <DialogDescription>
+                Add a new healthcare provider to your clinic team.
+                <br />
+                <strong>Note:</strong> Doctors and nurses will be able to login to the medical portal using their email and password.
+              </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleAddStaff} className="space-y-4">
               <div className="space-y-2">
@@ -156,9 +162,14 @@ export default function ClinicStaffPage() {
                 <Label htmlFor="staff-role">Role</Label>
                 <Select
                   value={addForm.role}
-                  onValueChange={(value: "Doctor" | "Nurse" | "Administrator" | "Pharmacist") =>
-                    setAddForm({ ...addForm, role: value })
-                  }
+                  onValueChange={(value: "Doctor" | "Nurse" | "Clinic_Administrator" | "Pharmacist") => {
+                    setAddForm({ 
+                      ...addForm, 
+                      role: value,
+                      // Clear password if switching to non-medical role
+                      password: (value === "Doctor" || value === "Nurse") ? addForm.password : ""
+                    })
+                  }}
                   disabled={isAdding}
                 >
                   <SelectTrigger>
@@ -167,7 +178,7 @@ export default function ClinicStaffPage() {
                   <SelectContent>
                     <SelectItem value="Doctor">Doctor</SelectItem>
                     <SelectItem value="Nurse">Nurse</SelectItem>
-                    <SelectItem value="Administrator">Administrator</SelectItem>
+                    <SelectItem value="Clinic_Administrator">Administrator</SelectItem>
                     <SelectItem value="Pharmacist">Pharmacist</SelectItem>
                   </SelectContent>
                 </Select>
@@ -198,6 +209,25 @@ export default function ClinicStaffPage() {
                   disabled={isAdding}
                 />
               </div>
+
+              {/* Password field - required for doctors and nurses who need login access */}
+              {(addForm.role === "Doctor" || addForm.role === "Nurse") && (
+                <div className="space-y-2">
+                  <Label htmlFor="staff-password">Password</Label>
+                  <Input
+                    id="staff-password"
+                    type="password"
+                    value={addForm.password || ""}
+                    onChange={(e) => setAddForm({ ...addForm, password: e.target.value })}
+                    placeholder="Enter login password"
+                    required={addForm.role === "Doctor" || addForm.role === "Nurse"}
+                    disabled={isAdding}
+                  />
+                  <p className="text-sm text-gray-600">
+                    Password required for medical staff to access the medical portal
+                  </p>
+                </div>
+              )}
 
               <div className="flex gap-2 pt-4">
                 <Button type="submit" disabled={isAdding} className="flex-1 bg-blue-900 hover:bg-blue-800">
