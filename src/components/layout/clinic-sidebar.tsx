@@ -26,6 +26,7 @@ import {
   Settings,
   Heart,
   LogOut,
+  BarChart3,
 } from "lucide-react"
 import type { Clinic } from "@/types"
 
@@ -59,6 +60,12 @@ const clinicNavItems = [
     href: "/clinic/visits",
     icon: Calendar,
     color: "text-indigo-600",
+  },
+  {
+    title: "Analytics",
+    href: "/clinic/analytics",
+    icon: BarChart3,
+    color: "text-orange-600",
   },
   {
     title: "Settings",

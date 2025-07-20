@@ -23,6 +23,7 @@ import {
   Calendar,
   Heart,
   LogOut,
+  BarChart3,
 } from "lucide-react"
 import type { Staff } from "@/types"
 
@@ -44,6 +45,12 @@ const medicalNavItems = [
     href: "/portal/medical/visits",
     icon: Calendar,
     color: "text-purple-600",
+  },
+  {
+    title: "Analytics",
+    href: "/portal/medical/analytics",
+    icon: BarChart3,
+    color: "text-orange-600",
   },
 ]
 

@@ -17,6 +17,8 @@ import type {
   CreateDiagnosisData,
   CreatePrescriptionData,
 } from "@/types"
+import type { SystemAnalytics, ClinicAnalytics } from "@/types/analytics"
+import { mockSystemAnalytics, mockClinicAnalytics } from "@/lib/mock-analytics"
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000/api/v1"
 
@@ -259,6 +261,48 @@ class ApiClient {
     if (search) params.append("search", search)
     if (district) params.append("district", district)
     return this.request(`/auth/clinics?${params}`)
+  }
+
+  // Dashboard Analytics - Public
+  async getSystemAnalytics(): Promise<SystemAnalytics> {
+    // For now, return mock data. In production, this would be:
+    // return this.request("/dashboard/analytics")
+    return new Promise(resolve => {
+      setTimeout(() => resolve(mockSystemAnalytics), 500)
+    })
+  }
+
+  async getDashboardContent(): Promise<SystemAnalytics> {
+    // For now, return mock data. In production, this would be:
+    // return this.request("/dashboard/content")
+    return new Promise(resolve => {
+      setTimeout(() => resolve(mockSystemAnalytics), 500)
+    })
+  }
+
+  // Dashboard Analytics - Protected (Clinic specific)
+  async getClinicDashboardContent(): Promise<ClinicAnalytics> {
+    // For now, return mock data. In production, this would be:
+    // return this.request("/portal/clinic/dashboard/content")
+    return new Promise(resolve => {
+      setTimeout(() => resolve(mockClinicAnalytics), 500)
+    })
+  }
+
+  async getStaffDashboardContent(): Promise<ClinicAnalytics> {
+    // For now, return mock data. In production, this would be:
+    // return this.request("/portal/staff/dashboard/content")
+    return new Promise(resolve => {
+      setTimeout(() => resolve(mockClinicAnalytics), 500)
+    })
+  }
+
+  async getMedicalDashboardContent(): Promise<ClinicAnalytics> {
+    // For now, return mock data. In production, this would be:
+    // return this.request("/portal/medical/dashboard/content")
+    return new Promise(resolve => {
+      setTimeout(() => resolve(mockClinicAnalytics), 500)
+    })
   }
 }
 

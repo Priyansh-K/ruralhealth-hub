@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { useAuth } from "@/contexts/auth-context"
 import { Button } from "@/components/ui/button"
-import { Heart, LogOut, User } from "lucide-react"
+import { Heart, LogOut, User, BarChart3 } from "lucide-react"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,6 +29,13 @@ export function MainNav() {
         </Link>
 
         <nav className="flex items-center space-x-2 md:space-x-4">
+          <Link href="/dashboard">
+            <Button variant="ghost" size="sm" className="flex items-center space-x-2">
+              <BarChart3 className="h-4 w-4" />
+              <span className="hidden sm:inline">Analytics</span>
+            </Button>
+          </Link>
+          
           {!isAuthenticated ? (
             <>
               <Link href="/auth/login">
